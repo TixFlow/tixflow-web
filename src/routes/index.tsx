@@ -2,13 +2,20 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from '../pages/HomePage/HomePage';
+import LoginPage from '../pages/Login/login';
+import RegisterPage from '../pages/Register/Register';
+import ForgotPasswordPage from '../pages/ForgotPasswordPage/ForgotPasswordPage';
+import ProfilePage from '../pages/Profile-Page/profile';
 
 const AppRoutes: React.FC = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-       
+       <Route path="/dang-nhap" element={<LoginPage />}/>
+       <Route path="/dang-ky" element={<RegisterPage />}/>
+        <Route path="/quen-mat-khau" element={<ForgotPasswordPage />}/>
+        <Route path="/profile" element={<ProfilePage />}/>
       </Routes>
     </Router>
   );

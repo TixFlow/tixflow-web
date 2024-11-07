@@ -1,0 +1,10 @@
+.wrapper-black {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper-black__logo {
+  max-width: 100px; // Adjust this value to make the logo smaller or larger
+  height: auto; // Maintain aspect ratio
+}

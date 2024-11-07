@@ -1,0 +1,52 @@
+.footer {
+  .footer-title {
+    @apply text-lg font-bold text-gray-800 mb-3;
+  }
+
+  .footer-list {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      @apply text-gray-600 text-sm cursor-pointer;
+      margin-bottom: 0.5rem;
+
+      &:hover {
+        color: #2490fc; // Custom color for hover effect
+      }
+    }
+  }
+
+  .footer-bottom {
+    .footer-logo {
+      width: 100px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px;
+
+    .footer-content {
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .footer-title {
+      font-size: 1rem;
+    }
+
+    .footer-list li {
+      font-size: 0.875rem;
+    }
+
+    .footer-bottom {
+      padding-top: 1rem;
+    }
+  }
+}
+.footer-logo-link {
+  display: inline-block;
+
+  filter: brightness(0);
+  width: 100px;
+}
