@@ -5,6 +5,12 @@
   padding: 10px 20px;
   background: linear-gradient(to bottom, #2490fc, #7d4286);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  height: 60px;
 
   .logo {
     cursor: pointer;

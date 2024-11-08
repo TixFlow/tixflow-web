@@ -9,7 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../store/store';
 import { loadUser, selectGlobalLoading } from '../store/features/authSlice';
 import Loading from '../components/Loading/Loading';
-import ProtectedRoute from './ProtectedRoute'; // Định nghĩa một route bảo vệ
+import ProtectedRoute from './ProtectedRoute'; 
+import TicketSalesPage from '../pages/TicketSalesPage/TicketSalesPage';
+import TicketDetailPage from '../pages/TicketSalesPage/TicketDetail';
+import PaymentPage from '../pages/PaymentPage/Payment';
+import TicketSaleInfoPage from '../pages/TicketBuyPage/TicketBuy';
+import UploadTicketInfoPage from '../pages/TicketBuyPage/UploadTicket';
 
 const AppRoutes: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,8 +33,12 @@ const AppRoutes: React.FC = () => {
           <Route path="/sign-in" element={<LoginPage />} />
           <Route path="/sign-up" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          
-     
+          <Route path="/ticket-buy" element={<TicketSalesPage />} />
+          <Route path="/ticket-detail/:ticketId" element={<TicketDetailPage />} />
+          <Route path="/payment/:ticketId" element={<PaymentPage />} />
+
+          <Route path="/ticket-sale" element={<TicketSaleInfoPage />} />
+          <Route path="/upload-ticket-info" element={<UploadTicketInfoPage />} />
           <Route 
             path="/profile" 
             element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} 

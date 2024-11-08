@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Carousel, Button } from 'antd';
+import { Carousel, Button, Divider } from 'antd';
 import { useNavigate } from 'react-router-dom'; 
 import api from '../../config/axios';
 import './Content.scss';
@@ -42,7 +42,9 @@ const HomeContent: React.FC = () => {
     const categoryBlogs = groupedBlogs[category] || [];
     return (
       <div key={category} className="category-carousel">
-        <h2 className="category-title text-center text-2xl font-semibold mb-4">{category.toUpperCase()}</h2>
+        <Divider orientation="center" className="category-divider">
+          <h2 className="category-title text-2xl font-semibold mb-4">{category.toUpperCase()}</h2>
+        </Divider>
         <Carousel
           autoplay
           dots={false}
@@ -78,8 +80,8 @@ const HomeContent: React.FC = () => {
   return (
     <div className="blog-carousel-container">
       <div className="flex justify-center space-x-20 py-4 px-4">
-        <button className="action-btn">MUA LẠI VÉ</button>
-        <button className="action-btn">BÁN LẠI VÉ</button>
+        <button className="action-btn" onClick={() => navigate('/ticket-buy')}>MUA LẠI VÉ</button>
+        <button className="action-btn" onClick={() => navigate('/ticket-sale')}>BÁN LẠI VÉ</button>
       </div>
 
      {loading ? (

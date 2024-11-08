@@ -6,7 +6,6 @@ import api from "../../config/axios";
 
 interface AuthState {
   user: User | null;
-  token: string | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   globalLoading: boolean;
@@ -30,7 +29,6 @@ interface User {
 
 const initialState: AuthState = {
   user: JSON.parse(localStorage.getItem("user") || "null"),
-  token: Cookies.get("token") || null,
   status: "idle",
   error: null,
   globalLoading: false,
@@ -44,15 +42,18 @@ export const login = createAsyncThunk(
       const response = await api.post(`${API_URL}/auth/signin`, { email, password });
       const token = response.data.token;
 
+      Cookies.set("tokenn", token, { expires: 7 });
+      
+
       if (!token) throw new Error("No token found");
 
       const userResponse = await api.get(`${API_URL}/auth/verify`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const user = userResponse.data.user;
+      Cookies.set("userId", userResponse.data.user.id, { expires: 7 });
 
-      Cookies.set("token", token, { expires: 7 });
+      const user = userResponse.data.user;
 
       localStorage.setItem("user", JSON.stringify(user));
       
@@ -67,7 +68,7 @@ export const login = createAsyncThunk(
 export const loadUser = createAsyncThunk(
   "auth/loadUser",
   async (_, { rejectWithValue }) => {
-    const token = Cookies.get("token");
+    const token = Cookies.get("tokenn");
     if (!token) return rejectWithValue("No token available");
 
     try {
@@ -82,8 +83,9 @@ export const loadUser = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
-  Cookies.remove("token");
+  Cookies.remove("tokenn");
   localStorage.removeItem("user");
+  Cookies.remove("userId");
   return null;
 });
 
@@ -99,7 +101,6 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.token = action.payload.token;
         state.user = action.payload.user;
         state.globalLoading = false;
         state.error = null;
@@ -117,7 +118,6 @@ const authSlice = createSlice({
       })
       .addCase(loadUser.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.token = action.payload.token;
         state.globalLoading = false;
         state.user = action.payload.user;
         localStorage.setItem("user", JSON.stringify(action.payload.user));
@@ -126,7 +126,6 @@ const authSlice = createSlice({
       .addCase(loadUser.rejected, (state) => {
         state.status = "idle";
         state.user = null;
-        state.token = null;
         state.globalLoading = false;
         Cookies.remove("token");
         state.isAuthenticated = false;
@@ -134,7 +133,6 @@ const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.status = "idle";
         state.user = null;
-        state.token = null;
         state.globalLoading = false;
         state.isAuthenticated = false;
         localStorage.removeItem("user");
@@ -145,6 +143,5 @@ const authSlice = createSlice({
 export default authSlice.reducer;
 export const selectAuth = (state: RootState) => state.auth;
 export const selectUser = (state: RootState) => state.auth.user;
-export const selectToken = (state: RootState) => state.auth.token;
 export const selectGlobalLoading = (state: RootState) => state.auth.globalLoading;
 export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;

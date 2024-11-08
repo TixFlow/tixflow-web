@@ -4,12 +4,30 @@
 }
 
 .category-carousel {
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 }
 
 .category-title {
   font-weight: bold;
   text-transform: uppercase;
+  font-size: 2rem;
+}
+
+.category-divider {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 20px;
+
+  .ant-divider-inner-text {
+    padding: 0 24px;
+  }
+
+  &::before,
+  &::after {
+    border-top: 6px solid #000000;
+    width: 160px;
+  }
 }
 
 .blog-card {
@@ -37,7 +55,7 @@
 }
 
 .action-btn {
-  background-color: #007bff;
+  background: linear-gradient(to bottom, #2490fc, #7d4286);
   color: white;
   padding: 10px 20px;
   border-radius: 30px;

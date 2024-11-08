@@ -5,16 +5,16 @@ import Logo from '../Logo/Logo';
 import './header.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadUser, logout, selectUser } from '../../store/features/authSlice';
-import { AppDispatch, RootState } from '../../store/store';
+import { AppDispatch} from '../../store/store';
 import { Dropdown, MenuProps } from 'antd';
+import Cookies from "js-cookie";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const user = useSelector(selectUser);
   const dispatch = useDispatch<AppDispatch>();
-
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const token = Cookies.get("tokenn");
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -23,8 +23,8 @@ const Header: React.FC = () => {
   const routeKeys = {
     '/': '1',
     '/blog': '2',
-    '/ban-ve': '3',
-    '/mua-ve': '4',
+    '/ticket-sale': '3',
+    '/ticket-buy': '4',
     '/ve-chung-toi': '5',
   } as const;
 
@@ -92,7 +92,7 @@ const Header: React.FC = () => {
       </nav>
 
       <div className="auth-buttons">
-        {isAuthenticated ? (
+        {token ? (
           <Dropdown menu={profileMenu} trigger={['click']}>
             <div className="profile-dropdown" role="button" aria-label="User profile">
               <FaUser className="user-icon" />
@@ -115,9 +115,9 @@ const Header: React.FC = () => {
         return <FaHome />;
       case '/blog':
         return <FaList />;
-      case '/ban-ve':
+      case '/ticket-sale':
         return <FaShoppingCart />;
-      case '/mua-ve':
+      case '/ticket-buy':
         return <FaTicketAlt />;
       case '/ve-chung-toi':
         return <FaUsers />;
@@ -132,9 +132,9 @@ const Header: React.FC = () => {
         return 'Trang chủ';
       case '/blog':
         return 'Blog Sự kiện';
-      case '/ban-ve':
+      case '/ticket-sale':
         return 'Bán vé';
-      case '/mua-ve':
+      case '/ticket-buy':
         return 'Mua vé';
       case '/ve-chung-toi':
         return 'Vé chúng tôi';

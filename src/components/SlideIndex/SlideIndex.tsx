@@ -44,7 +44,7 @@ export default function SlideIndex({ interval = 3000 }) {
   };
 
   return (
-    <div className="carousel-container">
+    <div className="carousel-container mt-12">
       <div className="carousel-content">
         {items.length > 0 ? items[activeStep] : <p>Loading...</p>}
       </div>

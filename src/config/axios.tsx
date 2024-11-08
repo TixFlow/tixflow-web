@@ -10,7 +10,7 @@ const config: AxiosRequestConfig = {
 const api = axios.create(config);
 
 const handleRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-  const token = Cookies.get("token");
+  const token = Cookies.get("tokenn");
 
   if (token) {
     (config.headers as any).set('Authorization', `Bearer ${token}`);
