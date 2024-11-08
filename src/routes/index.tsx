@@ -12,9 +12,9 @@ const AppRoutes: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-       <Route path="/dang-nhap" element={<LoginPage />}/>
-       <Route path="/dang-ky" element={<RegisterPage />}/>
-        <Route path="/quen-mat-khau" element={<ForgotPasswordPage />}/>
+       <Route path="/sign-in" element={<LoginPage />}/>
+       <Route path="/sign-up" element={<RegisterPage />}/>
+        <Route path="/forgot-password" element={<ForgotPasswordPage />}/>
         <Route path="/profile" element={<ProfilePage />}/>
       </Routes>
     </Router>

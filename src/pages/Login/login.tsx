@@ -9,17 +9,17 @@ import { useNavigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../store/store';
-import { login, verify, selectAuth } from '../../store/features/authSlice';
+import { login, selectAuth } from '../../store/features/authSlice';
 
 const LoginPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('email'); 
   const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
-  const { status, error, token } = useSelector(selectAuth);  
+  const { status, error} = useSelector(selectAuth);  
 
-  const handleRegister = () => navigate('/dang-ky');
-  const handleForgotPassword = () => navigate('/quen-mat-khau');
+  const handleRegister = () => navigate('/sign-up');
+  const handleForgotPassword = () => navigate('/forgot-password');
   const handleHome = () => navigate('/');
 
   const onFinish = (values: { email?: string; phone?: string; password: string }) => {

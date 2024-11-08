@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./SlideIndex.scss";
 import images from "./dataSlide.js";
 
-console.log("Imported images:", images);
-
 export default function SlideIndex({ interval = 3000 }) {
   const [activeStep, setActiveStep] = useState(0);
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<JSX.Element[]>([]);
 
   useEffect(() => {
     if (Array.isArray(images) && images.length > 0) {
-      console.log("Images array:", images);
       const loadedItems = images.map((img, index) => (
         <img
           className="carousel_pic"

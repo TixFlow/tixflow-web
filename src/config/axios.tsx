@@ -11,6 +11,7 @@ const api = axios.create(config);
 
 const handleRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
   const token = Cookies.get("token");
+
   if (token) {
     (config.headers as any).set('Authorization', `Bearer ${token}`);
   }
@@ -27,7 +28,7 @@ const handleResponse = (response: AxiosResponse): AxiosResponse => {
 
 const handleResponseError = (error: AxiosError): Promise<AxiosError> => {
   if (error.response && error.response.status === 401) {
-    window.location.href = "/sign-in";
+    window.location.href = "/dang-nhap";
   }
   return Promise.reject(error);
 };

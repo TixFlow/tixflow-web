@@ -72,37 +72,6 @@ const ProfilePage = () => {
         </div>
         <button className="mt-2 text-blue-500 hover:underline">Xem thêm...</button>
       </div>
-
-      <div className="mb-8">
-        <h3 className="text-lg font-semibold mb-2 text-gray-700">QUẢN LÝ GÓI ĐĂNG KÝ</h3>
-        <p className="text-sm mb-2">Gói đang sử dụng: Miễn phí</p>
-        <button className="bg-red-500 hover:bg-red-600 text-white py-1 px-4 mr-2 rounded shadow-md">HỦY GÓI</button>
-        <button className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded shadow-md">ĐỔI GÓI</button>
-      </div>
-
-      <div className="mb-8">
-        <h3 className="text-lg font-semibold mb-2 text-gray-700">BẢO MẬT</h3>
-        <p className="text-sm"><strong>Mật khẩu:</strong> ************</p>
-        <p className="text-sm"><strong>Xác thực 2 yếu tố:</strong> Đang bật</p>
-        <p className="text-sm"><strong>Email khôi phục:</strong> ng******@gmail.com</p>
-        <p className="text-sm"><strong>SĐT khôi phục:</strong> 090******9</p>
-        <div className="mt-2 space-x-2">
-          <button className="bg-gray-300 hover:bg-gray-400 text-black py-1 px-4 rounded">Đổi mật khẩu</button>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded">Đổi email</button>
-          <button className="bg-green-500 hover:bg-green-600 text-white py-1 px-4 rounded">Đổi SĐT</button>
-        </div>
-      </div>
-
-      <div>
-        <h3 className="text-lg font-semibold mb-2 text-gray-700">KHÁC</h3>
-        <p className="text-sm"><strong>Ngôn ngữ:</strong> Tiếng Việt</p>
-        <button className="mt-2 bg-gray-300 hover:bg-gray-400 text-black py-1 px-4 rounded">Đổi ngôn ngữ</button>
-        <div className="mt-4">
-          <p className="text-sm"><strong>Liên kết tài khoản:</strong></p>
-          <button className="mt-2 bg-blue-600 hover:bg-blue-700 text-white py-1 px-4 rounded mr-2">Liên kết qua Facebook</button>
-          <button className="mt-2 bg-gray-700 hover:bg-gray-800 text-white py-1 px-4 rounded">Liên kết qua Gmail</button>
-        </div>
-      </div>
     </div>
 <Footer/>
     </div>

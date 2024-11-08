@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import Cookies from "js-cookie";
 import { RootState } from "../store"; 
 import { API_URL } from "../../constants/index"; 
 import api from "../../config/axios";
+import axios from "axios";
 
 interface AuthState {
   user: User | null;
@@ -13,8 +13,18 @@ interface AuthState {
 }
 
 interface User {
+  id: string;
   email: string;
-  username: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  avatarUrl?: string | null;
+  phoneNumber?: string;
+  gender?: string;
+  status?: string;
+  verificationCode?: string | null;
+  createdAt?: string;
+  updateAt?: string;
 }
 
 const initialState: AuthState = {
@@ -29,10 +39,18 @@ export const login = createAsyncThunk(
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await api.post(`${API_URL}/auth/signin`, { email, password });
-      const { token, user } = response.data;  
-     
+      const token = response.data.token;
+
       Cookies.set("token", token, { expires: 7 });
 
+      if (!token) throw new Error("No token found");
+
+       const userResponse = await axios.get(`${API_URL}/auth/verify`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const user = userResponse.data.user;
+      
       return { token, user };
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || "Đăng nhập thất bại");
@@ -40,33 +58,17 @@ export const login = createAsyncThunk(
   }
 );
 
-export const register = createAsyncThunk(
-  "auth/signup",
-  async ({ username, email, password }: { username: string; email: string; password: string }, { rejectWithValue }) => {
-    try {
-      const response = await api.post(`${API_URL}/auth/signup`, { username, email, password });
-      return response.data;
-    } catch (error: any) {
-     return rejectWithValue(error.response?.data?.message || "Đăng ký thất bại");
-    }
-  }
-);
-
-export const verify = createAsyncThunk(
-  "auth/verify",
-  async (_, { rejectWithValue }) => {
-    try {
-      const token = Cookies.get("token");
-      if (!token) throw new Error("No token found");
-      const response = await api.get(`${API_URL}/auth/verify`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || "Token verification failed");
-    }
-  }
-);
+// export const register = createAsyncThunk(
+//   "auth/signup",
+//   async ({ username, email, password }: { username: string; email: string; password: string }, { rejectWithValue }) => {
+//     try {
+//       const response = await api.post(`${API_URL}/auth/signup`, { username, email, password });
+//       return response.data;
+//     } catch (error: any) {
+//      return rejectWithValue(error.response?.data?.message || "Đăng ký thất bại");
+//     }
+//   }
+// );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
   Cookies.remove("token");
@@ -92,29 +94,17 @@ const authSlice = createSlice({
         state.status = "failed";
         state.error = action.payload as string;
       })
-      .addCase(register.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(register.fulfilled, (state) => {
-        state.status = "succeeded";
-        state.error = null;
-      })
-      .addCase(register.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload as string;
-      })
-      .addCase(verify.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(verify.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.user = action.payload;
-        state.error = null;
-      })
-      .addCase(verify.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload as string;
-      })
+      // .addCase(register.pending, (state) => {
+      //   state.status = "loading";
+      // })
+      // .addCase(register.fulfilled, (state) => {
+      //   state.status = "succeeded";
+      //   state.error = null;
+      // })
+      // .addCase(register.rejected, (state, action) => {
+      //   state.status = "failed";
+      //   state.error = action.payload as string;
+      // })
       .addCase(logout.fulfilled, (state) => {
         state.status = "idle";
         state.user = null;

@@ -3,15 +3,16 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { FaHome, FaList, FaTicketAlt, FaShoppingCart, FaUsers, FaUser } from 'react-icons/fa';
 import Logo from '../Logo/Logo';
 import "./header.scss";
-import { useDispatch} from 'react-redux';
-import Cookies from 'js-cookie';
-import { logout } from '../../store/features/authSlice';
+import { useDispatch, useSelector} from 'react-redux';
+import { logout, selectUser } from '../../store/features/authSlice';
+import { AppDispatch } from '../../store/store';
+import { Dropdown, Menu } from 'antd';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const token = Cookies.get('token');
-  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -38,6 +39,23 @@ const Header: React.FC = () => {
     dispatch(logout()); 
     navigate('/'); 
   };
+
+  const profileMenu = (
+    <Menu>
+      <Menu.Item key="profile" onClick={() => handleNavigate('/profile')}>
+        Thông tin tài khoản
+      </Menu.Item>
+      <Menu.Item key="tickets" onClick={() => handleNavigate('/tickets')}>
+        Quản lý vé đã mua
+      </Menu.Item>
+      <Menu.Item key="history" onClick={() => handleNavigate('/transaction-history')}>
+        Lịch sử giao dịch
+      </Menu.Item>
+      <Menu.Item key="logout" onClick={handleLogout}>
+        Đăng xuất
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <header className="header">
@@ -66,19 +84,22 @@ const Header: React.FC = () => {
       </nav>
 
     <div className="auth-buttons">
-        {token ? (
-
-          <>
-            <FaUser className="user-icon" onClick={() => handleNavigate('/profile')} /> 
-            <button onClick={handleLogout}>Đăng xuất</button>
-          </>
+        {user?.firstName ? (
+          <Dropdown overlay={profileMenu} trigger={['click']}>
+            <div className="profile-dropdown">
+              <FaUser className="user-icon" />
+                <span className="user-name">Hi {user.firstName}!</span>
+            </div>
+          </Dropdown>
+          
         ) : (
           <>
-            <button onClick={() => handleNavigate('/dang-nhap')}>Đăng nhập</button>
-            <button onClick={() => handleNavigate('/dang-ky')}>Đăng ký</button>
+            <button onClick={() => handleNavigate('/sign-in')}>Đăng nhập</button>
+            <button onClick={() => handleNavigate('/sign-up')}>Đăng ký</button>
           </>
         )}
       </div>
+
     </header>
   );
 };

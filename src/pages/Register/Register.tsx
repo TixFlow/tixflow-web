@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Input, Radio, Form, message } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
-
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from "../../store/store";
-import { selectAuth } from '../../store/features/authSlice';
 
 import './register.scss'; 
 import background from '../../assets/bg.png';
@@ -32,7 +28,7 @@ const handleRegister = async (values: RegisterFormValues) => {
       const response = await api.post('/auth/signup', values);
       if (response.status === 201) {
         message.success('Đăng ký thành công!');
-        navigate('/dang-nhap'); 
+        navigate('/sign-in'); 
       }
     } catch (error: any) {
       message.error(error.response?.data?.message || 'Đăng ký thất bại, vui lòng thử lại!');
@@ -78,7 +74,7 @@ const handleRegister = async (values: RegisterFormValues) => {
 
           <Form.Item 
             label="Họ" 
-            name="firstName" 
+            name="lastName" 
             rules={[{ required: true, message: 'Vui lòng nhập họ!' }]}
             className="mb-3"
           >
@@ -87,7 +83,7 @@ const handleRegister = async (values: RegisterFormValues) => {
 
           <Form.Item 
             label="Tên" 
-            name="lastName" 
+            name="firstName" 
             rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}
             className="mb-3"
           >
@@ -127,7 +123,7 @@ const handleRegister = async (values: RegisterFormValues) => {
         </Form>
 
         <div className="text-center text-white mt-4">
-          Đã có tài khoản? <a href="#" onClick={() => navigate('/dang-nhap')} className="text-blue-500">Đăng nhập</a>
+          Đã có tài khoản? <a href="#" onClick={() => navigate('/sign-in')} className="text-blue-500">Đăng nhập</a>
         </div>
       </div>
     </div>
