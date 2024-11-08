@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Input, Radio, Form, message } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 
@@ -6,6 +6,7 @@ import './register.scss';
 import background from '../../assets/bg.png';
 import { useNavigate } from 'react-router-dom';
 import api from '../../config/axios';
+import Loading from '../../components/Loading/Loading';
 
 interface RegisterFormValues {
   email: string;
@@ -18,12 +19,15 @@ interface RegisterFormValues {
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleHome = () => {
     navigate('/');
   };
 
-const handleRegister = async (values: RegisterFormValues) => {
+
+  const handleRegister = async (values: RegisterFormValues) => {
+    setLoading(true);
     try {
       const response = await api.post('/auth/signup', values);
       if (response.status === 201) {
@@ -32,6 +36,8 @@ const handleRegister = async (values: RegisterFormValues) => {
       }
     } catch (error: any) {
       message.error(error.response?.data?.message || 'Đăng ký thất bại, vui lòng thử lại!');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,6 +47,7 @@ const handleRegister = async (values: RegisterFormValues) => {
       className="flex items-center justify-center h-screen bg-cover bg-center" 
       style={{ backgroundImage: `url(${background})` }}
     >
+      {loading && <Loading />}
       <Button
         type="text"
         icon={<HomeOutlined />}

@@ -52,8 +52,7 @@
 
     button {
       padding: 8px 12px;
-      border: 1px solid #007bff;
-      background-color: #007bff;
+
       color: #ffffff;
       border-radius: 4px;
       font-size: 14px;
@@ -63,7 +62,7 @@
         color 0.3s ease;
 
       &:hover {
-        background-color: #0056b3;
+        color: yellow;
       }
     }
 
@@ -87,7 +86,6 @@
   }
 }
 
-// Dropdown menu styling
 .ant-dropdown-menu {
   min-width: 160px;
   border-radius: 4px;
@@ -107,7 +105,6 @@
   }
 }
 
-// Active item styling
 .ant-dropdown-menu-item-active {
   background-color: #007bff;
   color: #fff;
